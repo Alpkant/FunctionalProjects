@@ -1,0 +1,4 @@
+Question 2 
+Part A = sundays' helper function starts recursion of calculating if first of the month is Sunday, if it is  it wait the result of the recursion that started by calculated nextY and nextM values and increases the number of Sundays by 1 (result of the recursion below it).
+
+Part B =  
