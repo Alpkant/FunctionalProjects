@@ -48,5 +48,5 @@ def sundays2(start, end):
     return n
 
 
-print(sundays1(1901, 2000))
+print(day_of_week(1996,8,17))
 print(sundays2(1901, 2000))

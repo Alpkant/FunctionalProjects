@@ -5,6 +5,7 @@ dayOfWeek year month day  = mod ( day + t + k + floor(fromIntegral k / 4) + floo
     where 
         month' 
          | month <= 2 = month + 12
+         | otherwise = month
 
         t :: Integer
         t = floor (fromIntegral (13 * (month' + 1)) / 5.0)
