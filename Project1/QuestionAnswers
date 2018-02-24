@@ -4,3 +4,5 @@ Part A = sundays' helper function starts recursion of calculating if first of th
 Part B =  If we only use the expression instead of defining the readability will be worse.
 
 Question 5
+
+In gregorian calendar there is 400-year cycle of leap years so every 400 years will have the same number of weeks. Therefore all days are equally possible for being  a sunday since 400 years is an integer which can be divided by 7 without reminder.
