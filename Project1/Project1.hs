@@ -12,13 +12,13 @@ sundays1 start end = sundays' start 1
     
 
 
-sundays1Recursive :: Integer -> Integer -> Integer
-sundays1Recursive start end = sundaysRec' start 1 0
+sundays1TailRecursive :: Integer -> Integer -> Integer
+sundays1TailRecursive start end = sundaysTail' start 1 0
   where
-    sundaysRec' :: Integer -> Integer -> Integer -> Integer
-    sundaysRec' y m current
+    sundaysTail' :: Integer -> Integer -> Integer -> Integer
+    sundaysTail' y m current
       | y > end = current
-      | otherwise = if dayOfWeek y m 1 == 1 then sundaysRec' nextY nextM current+1 else  sundaysRec' nextY nextM current
+      | otherwise = if dayOfWeek y m 1 == 1 then sundaysTail' nextY nextM current+1 else  sundaysTail' nextY nextM current
         where
           nextY = if m == 12 then y + 1 else y
           nextM = if m == 12 then 1 else m + 1
@@ -72,6 +72,5 @@ sundays2 start end = sundays2' 2 start 0 1  -- Start  with weekday 2 and n value
             | otherwise = 31
               where
                 leap :: Integer -> Bool
-                leap year
-                  | mod year 4 == 0 && mod year 100 /= 0 || mod year 400 == 0 = True
-                  | otherwise = False
+                leap year = if mod year 4 == 0 && mod year 100 /= 0 || mod year 400 == 0 then True else False
+                  
