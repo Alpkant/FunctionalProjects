@@ -17,5 +17,10 @@ data Card = Card { suit :: Suit, rank :: Rank }
 cardColor :: Card -> Color
 cardColor card = if suit card == Spades || suit card == Clubs then Black else Red
 
+cardValue :: Card -> Int
+cardValue card = case rank card of
+    Num value -> value
+    Ace       -> 10
+    _         -> 11
 main :: IO ()
 main = return ()
