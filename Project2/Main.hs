@@ -24,11 +24,8 @@ cardValue card = case rank card of
     Ace       -> 10
     _         -> 11
 
---removeCard :: [Card] -> Card -> [Card]
---removeCard list current = removeCard' list current False
---    where
---        removeCard' :: [Card] -> Card -> Bool -> [Card]
---        removeCard'
+removeCard :: [Card] -> Card -> [Card]
+removeCard (x:xs) c = if c == x then xs else x : removeCard xs c
 
 allSameColor :: [Card] -> Bool
 allSameColor [x]        = True
@@ -70,6 +67,7 @@ convertRank card
 
 convertCard :: Char -> Char -> Card
 convertCard suit rank = Card (convertSuit suit) (convertRank rank)
+
 
 main :: IO ()
 main = return ()
