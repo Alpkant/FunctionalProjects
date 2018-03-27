@@ -68,6 +68,8 @@ convertRank card
     | isDigit card = (Num (digitToInt card))
     | otherwise = error "Rank is unknown!"
 
+convertCard :: Char -> Char -> Card
+convertCard suit rank = Card (convertSuit suit) (convertRank rank)
 
 main :: IO ()
 main = return ()
