@@ -41,6 +41,21 @@ sumCards list = sumCards' list 0
         sumCards' [] acc = acc
         sumCards' (x:xs) acc = sumCards' xs (acc + cardValue x)
 
+score :: [Card] -> Int -> Int
+score held goal
+    | sum > goal = if allSameColor held then div (3*(sum-goal)) 2 else 3*(sum - goal)
+    | otherwise  = if allSameColor held then div (goal-sum)     2 else goal-sum
+        where
+            sum:: Int
+            sum = sumCards held
+
+convertSuit :: Char -> Suit
+convertSuit card
+    | elem card ['c','C'] = Clubs
+    | elem card ['d','D'] = Diamonds
+    | elem card ['h','H'] = Hearts
+    | elem card ['s','S'] = Spades
+    | otherwise = error "Suit is unknown!"
 
 main :: IO ()
 main = return ()
