@@ -1,3 +1,4 @@
+import Data.Char (isDigit,digitToInt)
 data Color = Red | Black
             deriving (Eq,Show)
 
@@ -56,6 +57,17 @@ convertSuit card
     | elem card ['h','H'] = Hearts
     | elem card ['s','S'] = Spades
     | otherwise = error "Suit is unknown!"
+
+convertRank :: Char -> Rank
+convertRank card
+    | elem card ['j','J'] = Jack
+    | elem card ['q','Q'] = Queen
+    | elem card ['k','K'] = King
+    | elem card ['t','T'] = (Num 10)
+    | card == '1' = Ace
+    | isDigit card = (Num (digitToInt card))
+    | otherwise = error "Rank is unknown!"
+
 
 main :: IO ()
 main = return ()
