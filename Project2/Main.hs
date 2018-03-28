@@ -68,6 +68,16 @@ convertRank card
 convertCard :: Char -> Char -> Card
 convertCard suit rank = Card (convertSuit suit) (convertRank rank)
 
+readCards :: IO [Card]
+readCards  = do
+    line <- getLine
+    if line == "."
+        then  return []
+        else do
+            let currentCard   = (convertCard (head line) (head (tail line)))
+            recursiveList <- readCards
+            return (currentCard:recursiveList)
+
 
 main :: IO ()
 main = return ()
