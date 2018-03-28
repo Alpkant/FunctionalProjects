@@ -78,6 +78,11 @@ readCards  = do
             recursiveList <- readCards
             return (currentCard:recursiveList)
 
+convertMove :: Char -> Char -> Char -> Move
+convertMove move suit rank
+    | elem move ['d','D'] = Draw
+    | elem move ['r','R'] = Discard (Card (convertSuit suit) (convertRank rank))
+    | otherwise = error "Unknown move!"
 
 main :: IO ()
 main = return ()
