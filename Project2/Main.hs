@@ -84,5 +84,17 @@ convertMove move suit rank
     | elem move ['r','R'] = Discard (Card (convertSuit suit) (convertRank rank))
     | otherwise = error "Unknown move!"
 
+readMoves :: IO [Move]
+readMoves  = do
+    line <- getLine
+    if line == "."
+        then  return []
+        else if length line == 3 || length line == 1
+            then do
+            let currentMove  = (convertMove (head line) (head (tail line)) (head (tail (tail line)) ))
+            recursiveList <- readMoves
+            return (currentMove:recursiveList)
+        else error "Move is not valid." 
+
 main :: IO ()
 main = return ()
