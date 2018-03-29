@@ -21,8 +21,8 @@ cardColor card = if suit card == Spades || suit card == Clubs then Black else Re
 cardValue :: Card -> Int
 cardValue card = case rank card of
     Num value -> value
-    Ace       -> 10
-    _         -> 11
+    Ace       -> 11
+    _         -> 10
 
 removeCard :: [Card] -> Card -> [Card]
 removeCard (x:xs) c = if c == x then xs else x : removeCard xs c
@@ -46,6 +46,8 @@ score held goal
         where
             sum:: Int
             sum = sumCards held
+
+runGame :: [Card] -> [Move] -> Int -> Int
 
 convertSuit :: Char -> Suit
 convertSuit card
@@ -94,7 +96,7 @@ readMoves  = do
             let currentMove  = (convertMove (head line) (head (tail line)) (head (tail (tail line)) ))
             recursiveList <- readMoves
             return (currentMove:recursiveList)
-        else error "Move is not valid." 
+        else error "Move is not valid."
 
 main :: IO ()
 main = return ()
