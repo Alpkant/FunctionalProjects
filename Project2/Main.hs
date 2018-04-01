@@ -45,7 +45,7 @@ sumCards list = sumCards' list 0
 score :: [Card] -> Int -> Int
 score held goal
     | sum > goal = if allSameColor held then div (3*(sum-goal)) 2 else 3*(sum - goal)
-    | otherwise  = if allSameColor held then div (goal-sum)     2 else goal-sum
+    | otherwise  = if allSameColor held then div (goal-sum)     2 else (goal-sum)
         where
             sum:: Int
             sum = sumCards held
@@ -56,12 +56,12 @@ runGame cardlist movelist goal = runGame' cardlist [] movelist Continue
     where
         runGame' :: [Card]->[Card] -> [Move] -> State -> Int
         runGame' _ heldlist _   Finished    = score heldlist goal
-        runGame' cardlist' heldlist []  state       = runGame' cardlist' heldlist [] Finished
+        runGame' cardlist' heldlist []  state                    = runGame' cardlist' heldlist [] Finished
         runGame' cl'@(c:cs) heldlist ms'@(Discard card:ms) state = runGame' cardlist (removeCard heldlist card) ms Continue
         runGame' cl'@(c:cs) heldlist ms'@(Draw:ms) state
             | cl' == []                       = runGame' cl' heldlist ms' Finished
-            | (sumCards (c:heldlist)) > goal  = runGame' cs heldlist ms' Finished
-            | otherwise = runGame' cs (c:heldlist) ms Continue
+            | (sumCards (c:heldlist)) > goal  = runGame' cs (c:heldlist) ms Finished
+            | otherwise                       = runGame' cs (c:heldlist) ms Continue
 
 convertSuit :: Char -> Suit
 convertSuit card
