@@ -2,18 +2,20 @@ import Data.Char (isDigit,digitToInt)
 data Color = Red | Black
             deriving (Eq,Show)
 
-data Suit = Clubs | Diamonds | Hearts | Spades
+data Suit  = Clubs | Diamonds | Hearts | Spades
             deriving (Eq,Show)
 
-data Move = Draw | Discard Card
+data Move  = Draw | Discard Card
             deriving (Eq,Show)
 
-data Rank = Num Int | Jack | Queen | King | Ace
+data Rank  = Num Int | Jack | Queen | King | Ace
             deriving (Eq,Show)
 
-data Card = Card { suit :: Suit, rank :: Rank }
+data Card  = Card { suit :: Suit, rank :: Rank }
             deriving (Eq,Show)
 
+data State = Continue | Finished
+            deriving (Eq,Show)
 
 cardColor :: Card -> Color
 cardColor card = if suit card == Spades || suit card == Clubs then Black else Red
@@ -26,6 +28,7 @@ cardValue card = case rank card of
 
 removeCard :: [Card] -> Card -> [Card]
 removeCard (x:xs) c = if c == x then xs else x : removeCard xs c
+removeCard []  _     = error "Card is not in the list."
 
 allSameColor :: [Card] -> Bool
 allSameColor [x]        = True
@@ -47,7 +50,18 @@ score held goal
             sum:: Int
             sum = sumCards held
 
+
 runGame :: [Card] -> [Move] -> Int -> Int
+runGame cardlist movelist goal = runGame' cardlist [] movelist Continue
+    where
+        runGame' :: [Card]->[Card] -> [Move] -> State -> Int
+        runGame' _ heldlist _   Finished    = score heldlist goal
+        runGame' cardlist' heldlist []  state       = runGame' cardlist' heldlist [] Finished
+        runGame' cl'@(c:cs) heldlist ms'@(Discard card:ms) state = runGame' cardlist (removeCard heldlist card) ms Continue
+        runGame' cl'@(c:cs) heldlist ms'@(Draw:ms) state
+            | cl' == []                       = runGame' cl' heldlist ms' Finished
+            | (sumCards (c:heldlist)) > goal  = runGame' cs heldlist ms' Finished
+            | otherwise = runGame' cs (c:heldlist) ms Continue
 
 convertSuit :: Char -> Suit
 convertSuit card
@@ -99,4 +113,14 @@ readMoves  = do
         else error "Move is not valid."
 
 main :: IO ()
-main = return ()
+main = do putStrLn "Enter cards:"
+          cards <- readCards
+     -- putStrLn (show cards)
+          putStrLn "Enter moves:"
+          moves <- readMoves
+     -- putStrLn (show moves)
+          putStrLn "Enter goal:"
+          line <- getLine
+          let goal = read line :: Int
+          let score = runGame cards moves goal
+          putStrLn ("Score: " ++ show score)
