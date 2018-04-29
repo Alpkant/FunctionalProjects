@@ -14,3 +14,6 @@ wordCharCounts = map (\x -> (head x,length x)) . group . sort . toLowerWord
 sentenceCharCounts :: Sentence -> CharCounts
 sentenceCharCounts [x]      = wordCharCounts x
 sentenceCharCounts (x:xs)   = (wordCharCounts x) ++ (sentenceCharCounts xs)
+
+dictCharCounts :: Sentence -> [(Word,CharCounts)]
+dictCharCounts = map (\x -> (x,wordCharCounts x))
