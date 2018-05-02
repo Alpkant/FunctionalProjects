@@ -17,5 +17,12 @@ sentenceCharCounts :: Sentence -> CharCounts
 sentenceCharCounts [x]      = wordCharCounts x
 sentenceCharCounts (x:xs)   = M.unionWith (+) (wordCharCounts x)  (sentenceCharCounts xs)
 
-dictCharCounts :: Sentence -> [(Word,CharCounts)]
-dictCharCounts = map (\x -> (x,wordCharCounts x))
+dictCharCounts :: Sentence -> M.Map Word CharCounts
+dictCharCounts = M.fromList . map (\x -> (x,wordCharCounts x))
+
+dictWordsByCharCounts :: M.Map Word CharCounts -> M.Map CharCounts Sentence
+dictWordsByCharCounts ms = iterateKeys $ M.toList ms
+    where
+      iterateKeys :: [(Word,CharCounts)] -> M.Map CharCounts Sentence
+      iterateKeys []     = M.fromList []
+      iterateKeys (x:xs) = M.insertWith (++) (snd x) [(fst x)] $ iterateKeys xs
