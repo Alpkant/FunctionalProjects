@@ -26,3 +26,6 @@ dictWordsByCharCounts ms = iterateKeys $ M.toList ms
       iterateKeys :: [(Word,CharCounts)] -> M.Map CharCounts Sentence
       iterateKeys []     = M.fromList []
       iterateKeys (x:xs) = M.insertWith (++) (snd x) [(fst x)] $ iterateKeys xs
+
+wordAnagrams :: Word -> M.Map CharCounts Sentence -> Sentence
+wordAnagrams key x = [z | (n,y) <- M.toList x , z <- y , n == wordCharCounts key ]
