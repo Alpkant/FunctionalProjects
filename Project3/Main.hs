@@ -38,9 +38,11 @@ wordAnagrams :: Word -> M.Map CharCounts Sentence -> Sentence
 wordAnagrams key x = [z | (n,y) <- M.toList x , z <- y , n == wordCharCounts key ]
 
 
---This function is wrong currently. It gives unnecessary tuples.
+-- For given argument it finds all possible subsets (powerset) and returns as list of same type
+-- charCountsSubsets $ wordCharCounts "all"
+-- returns [fromList [('a',1),('l',2)],fromList [('l',2)],fromList [('a',1),('l',1)],fromList [('l',1)],fromList [('a',1)],fromList []]
 charCountsSubsets :: CharCounts -> [CharCounts]
-charCountsSubsets xs = iterateKeys $ powerset $ convertCounts $ M.toList xs
+charCountsSubsets xs = Data.List.nub $ iterateKeys $ powerset $ convertCounts $ M.toList xs
     where
       convertCounts :: [(Char,Int)] -> [(Char,Int)]
       convertCounts list = [(x,1) | (x,xs) <- list , y <- [1..xs]]
