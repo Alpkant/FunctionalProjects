@@ -21,7 +21,7 @@ insertList :: [Word] -> Trie
 insertList = foldr insert empty
 
 search :: Word -> Trie -> Bool
-search []     _          = True
+search []     (Trie e _)  = e
 search (x:xs) (Trie _ t) = case M.lookup x t of
                            Just value -> search xs value
                            Nothing    -> False
