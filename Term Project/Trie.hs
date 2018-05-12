@@ -18,7 +18,7 @@ insert x'@(x:xs) (Trie e t) = case M.lookup x t of
                               Nothing    -> Trie {end = e , children = M.insert x (insert xs empty) t }
 
 insertList :: [Word] -> Trie
-insertList = undefined
+insertList = foldr insert empty
 
 search :: Word -> Trie -> Bool
 search = undefined
