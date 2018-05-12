@@ -5,10 +5,11 @@ import System.IO
 import Prelude hiding (Word)
 
 data Trie = Trie {end :: Bool, children :: M.Map Char Trie}
+            deriving Show
 type Word = String
 
 empty :: Trie
-empty = Trie {end = True , children = M.empty }
+empty = Trie {end = False , children = M.empty }
 
 insert :: Word -> Trie -> Trie
 insert = undefined
