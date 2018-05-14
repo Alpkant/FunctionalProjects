@@ -1,5 +1,6 @@
 import qualified Data.Map as M
 import Data.Maybe
+import qualified Data.List as L
 import System.Environment
 import System.IO
 import Prelude hiding (Word)
@@ -46,4 +47,17 @@ getWords t = getWords' t []
         concatr x ys = map (\a -> a ++ [x]) ys
 
 prefix :: Word -> Trie -> Maybe [Word]
-prefix = undefined
+prefix w xs = makeMaybeList allPrefix
+    where
+        -- Filter all the words that matches with prefix word
+        allPrefix::[Word]
+        allPrefix = [x | x <- allWords , L.isPrefixOf w x]
+        -- Get all words of the Trie
+        allWords::[Word]
+        allWords  = getWords xs
+
+        -- Make the prefix list Maybe List.
+        -- It returns Nothing if no matched prefix in Trie
+        makeMaybeList:: [Word] -> Maybe [Word]
+        makeMaybeList [] = Nothing
+        makeMaybeList m  = Just m
