@@ -27,7 +27,23 @@ search (x:xs) (Trie _ t) = case M.lookup x t of
                            Nothing    -> False
 
 getWords :: Trie -> [Word]
-getWords = undefined
+getWords t = getWords' t []
+    where
+        getWords' :: Trie -> [Word] -> [Word]
+        getWords' (Trie e t) xs
+            | null listOfChildren = xs
+            | e                   = (head xs) : traverseChildTries
+            | otherwise           = traverseChildTries
+            where
+                listOfChildren:: [(Char,Trie)]
+                listOfChildren = M.toList t
+
+                traverseChildTries:: [Word]
+                traverseChildTries = concat $ map (\(x,y) -> getWords' y (concatr x xs) ) listOfChildren
+
+        concatr :: Char -> [Word] -> [Word]
+        concatr x [] = [[x]]
+        concatr x ys = map (\a -> a ++ [x]) ys
 
 prefix :: Word -> Trie -> Maybe [Word]
 prefix = undefined
