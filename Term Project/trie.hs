@@ -75,6 +75,32 @@ getWord = do
             let lower = map toLower word
             return lower
 
+doAction :: Action -> Trie -> IO Trie
+doAction (Add word)     tree = do
+                                putStr "New word is added!\n"
+                                return $ insert word tree
+
+doAction (Search word)  tree = do
+                                if search word tree
+                                then putStr "Exists in dictionary!\n"
+                                else putStr "NOT exists!\n"
+                                return tree
+
+doAction (Prefix word)  tree = do
+                                let list = prefix word tree
+                                if  list == Nothing
+                                then do putStr "No words found with that prefix!\n"
+                                else do
+                                    putStr "Found words:\n"
+                                    putStr $ L.intercalate "\n" $ fromJust list
+                                return tree
+
+doAction  Print         tree = do
+                                putStr "List of words in dictionary:\n"
+                                putStr $ L.intercalate "\n" $ getWords tree
+                                return tree
+
+
 printMenu :: IO()
 printMenu = do
             putStr "a) Add Word\n"
