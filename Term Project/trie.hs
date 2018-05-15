@@ -141,3 +141,11 @@ doLoop maintree = do
             then return()
 
         else doLoop maintree
+
+main = do
+    hSetBuffering stdin NoBuffering
+    args <- getArgs
+    contents <- readFile $ head args
+    let dictionary = words $ contents
+    let maintree = insertList dictionary
+    doLoop maintree
