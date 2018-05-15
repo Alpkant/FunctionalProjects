@@ -109,3 +109,35 @@ printMenu = do
             putStr "p) Print all words\n"
             putStr "e) Exit\n"
             putStr "Enter the action:\n"
+
+
+doLoop :: Trie -> IO()
+doLoop maintree = do
+        printMenu
+        choice <- getChar
+        if choice == 'a'
+        then do
+            key  <- getWord
+            tree <- doAction (Add key) maintree
+            doLoop tree
+
+        else if choice == 's'
+        then do
+            key <- getWord
+            tree <- doAction (Search key) maintree
+            doLoop tree
+
+        else if choice == 'f'
+        then do
+            key <- getWord
+            tree <- doAction (Prefix key) maintree
+            doLoop tree
+        else if choice == 'p'
+        then do
+            tree <- doAction Print maintree
+            doLoop tree
+
+        else if choice == 'e'
+            then return()
+
+        else doLoop maintree
