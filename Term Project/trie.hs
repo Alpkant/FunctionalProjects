@@ -1,5 +1,6 @@
 import qualified Data.Map as M
 import Data.Maybe
+import Data.Char
 import qualified Data.List as L
 import System.Environment
 import System.IO
@@ -7,6 +8,10 @@ import Prelude hiding (Word)
 
 data Trie = Trie {end :: Bool, children :: M.Map Char Trie}
             deriving Show
+
+data Action = Add  Word | Search Word | Prefix Word | Print | Exit
+            deriving (Eq,Show)
+
 type Word = String
 
 empty :: Trie
