@@ -66,3 +66,11 @@ prefix w xs = makeMaybeList allPrefix
         makeMaybeList:: [Word] -> Maybe [Word]
         makeMaybeList [] = Nothing
         makeMaybeList m  = Just m
+
+getWord :: IO String
+getWord = do
+            putStr "\nEnter word/prefix:\n"
+            hFlush stdout
+            word <- getLine
+            let lower = map toLower word
+            return lower
