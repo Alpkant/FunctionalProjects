@@ -74,3 +74,12 @@ getWord = do
             word <- getLine
             let lower = map toLower word
             return lower
+
+printMenu :: IO()
+printMenu = do
+            putStr "a) Add Word\n"
+            putStr "s) Search Word\n"
+            putStr "f) Find words with prefix\n"
+            putStr "p) Print all words\n"
+            putStr "e) Exit\n"
+            putStr "Enter the action:\n"
