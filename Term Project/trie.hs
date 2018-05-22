@@ -77,8 +77,9 @@ getWord = do
 
 doAction :: Action -> Trie -> IO Trie
 doAction (Add word)     tree = do
+                                let result =  insert word tree
                                 putStrLn "New word is added!"
-                                return $ insert word tree
+                                return result
 
 doAction (Search word)  tree = do
                                 if search word tree
