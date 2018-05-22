@@ -69,7 +69,7 @@ prefix w xs = makeMaybeList allPrefix
 
 getWord :: IO String
 getWord = do
-            putStr "\nEnter word/prefix:\n"
+            putStrLn "\nEnter word/prefix:"
             hFlush stdout
             word <- getLine
             let lower = map toLower word
@@ -77,38 +77,38 @@ getWord = do
 
 doAction :: Action -> Trie -> IO Trie
 doAction (Add word)     tree = do
-                                putStr "New word is added!\n"
+                                putStrLn "New word is added!"
                                 return $ insert word tree
 
 doAction (Search word)  tree = do
                                 if search word tree
-                                then putStr "Exists in dictionary!\n"
-                                else putStr "NOT exists!\n"
+                                then putStrLn "Exists in dictionary!"
+                                else putStrLn "NOT exists!"
                                 return tree
 
 doAction (Prefix word)  tree = do
                                 let list = prefix word tree
                                 if  list == Nothing
-                                then do putStr "No words found with that prefix!\n"
+                                then do putStrLn "No words found with that prefix!"
                                 else do
-                                    putStr "Found words:\n"
-                                    putStr $ L.intercalate "\n" $ fromJust list
+                                    putStrLn "Found words:"
+                                    putStrLn $ L.intercalate "\n" $ fromJust list --In order to print line by line
                                 return tree
 
 doAction  Print         tree = do
-                                putStr "List of words in dictionary:\n"
-                                putStr $ L.intercalate "\n" $ getWords tree
+                                putStrLn "List of words in dictionary:"
+                                putStrLn $ L.intercalate "\n" $ getWords tree --In order to print line by line
                                 return tree
 
 
 printMenu :: IO()
 printMenu = do
-            putStr "a) Add Word\n"
-            putStr "s) Search Word\n"
-            putStr "f) Find words with prefix\n"
-            putStr "p) Print all words\n"
-            putStr "e) Exit\n"
-            putStr "Enter the action:\n"
+            putStrLn "a) Add Word"
+            putStrLn "s) Search Word"
+            putStrLn "f) Find words with prefix"
+            putStrLn "p) Print all words"
+            putStrLn "e) Exit"
+            putStrLn "Enter the action:"
 
 
 doLoop :: Trie -> IO()
